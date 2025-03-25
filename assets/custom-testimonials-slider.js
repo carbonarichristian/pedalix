@@ -1,12 +1,16 @@
 // initialize slideshow
-const slideshow_container = document.querySelector(".testimonial-slider");
-const slider = new Flickity(slideshow_container, {
-	// options
-	cellAlign: "center",
-	wrapAround: true,
-	autoPlay: 2000,
-	pageDots: false,
-	fullscreen: true
+const slideshow_containers = document.querySelectorAll(".testimonial-slider");
+
+slideshow_containers.forEach((elem) => {
+
+  const slider = new Flickity(elem, {
+    // options
+    cellAlign: "center",
+    wrapAround: true,
+    autoPlay: Number(elem.dataset.autoplay),
+    pageDots: false,
+    fullscreen: true
+  });
 });
 // config:
 // assume there is just one single slider on the page

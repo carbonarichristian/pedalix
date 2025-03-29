@@ -9,6 +9,13 @@
  */
 {
   "sections": {
+    "countdown_8fLK9x": {
+      "type": "countdown",
+      "settings": {
+        "text": "Spring Sale! Save up to 20%",
+        "final_date": "March 30, 2025 00:00:00 EST"
+      }
+    },
     "image-with-text": {
       "type": "image-with-text",
       "blocks": {
@@ -495,6 +502,7 @@
     }
   },
   "order": [
+    "countdown_8fLK9x",
     "image-with-text",
     "featured_collection",
     "image_with_text_7GrjRn",

@@ -235,10 +235,10 @@
                       {% render 'icon-caret' %}
                     </summary>
                     <div class="accordion__content rte" id="ProductAccordion-{{ block.id }}-{{ section.id }}">
-                  
+
 
                     <table id='meta-information-table' data-initialvariantoption='{{product.selected_or_first_available_variant.option1}}' style="margin:1px">
-                     
+
                       <tbody>
                         <tr>
                           <td>Weight</td>
@@ -260,7 +260,7 @@
                           <td>Braking System</td>
                           <td id='meta-information-breaks'></td>
                         </tr>
-                       
+
                       </tbody>
                     </table>
 
@@ -299,16 +299,31 @@
                   const breaksTxt = document.querySelector('#meta-information-breaks');
 
                   function updateUI(variantOption) {
-
+                    const variantData = variantMetaData[variantOption];
+                    weightTxt.textContent = variantData.weight;
+                    rangeTxt.textContent = variantData.range;
+                    speedTxt.textContent = variantData.speed;
+                    batteryTxt.textContent = variantData.battery;
+                    breaksTxt.textContent = variantData.breaks;
                   }
-                  //subscribe to variant changes and update UI based on new selection
-                  //...
 
+                  // Listen for variant changes
+                  document.addEventListener('variant:changed', function(event) {
+                    const variant = event.detail.variant;
+                    updateUI(variant.option1);
+                  });
 
+                  // Initialize on page load
+                  document.addEventListener('DOMContentLoaded', function() {
+                    const variantSelect = document.querySelector('variant-selects');
+                    if (variantSelect) {
+                      const initialVariant = variantSelect.currentVariant;
+                      console.log("initial variant", initialVariant);
 
-                  //initialize on pageload
-                  const initialVariantOption = document.querySelector('#meta-information-table').dataset.initialvariantoption;
-                  updateUI(initialVariantOption);
+                      // Set initial UI
+                      updateUI(initialVariant.option1);
+                    }
+                  });
                 </script>
 
               {%- when 'quantity_selector' -%}

@@ -1132,19 +1132,20 @@ class VariantSelects extends HTMLElement {
       this.updateShareUrl();
     }
 
-    // Add this new code to dispatch a custom event//+
-    this.dispatchVariantChangeEvent();//+
-  }//+
+    // Add this new code to dispatch a custom event
+    this.dispatchVariantChangeEvent();
+  }
 //+
   // Add this new method to the VariantSelects class//+
-  dispatchVariantChangeEvent() {//+
-    const event = new CustomEvent('afterVariantChange', {//+
-      detail: {//+
-        newVariant: this.currentVariant//+
-      },//+
-      bubbles: true//+
-    });//+
-    this.element.dispatchEvent(event);//+
+  dispatchVariantChangeEvent() {
+    const variant = this.currentVariant;
+    if (variant) {
+      const variantChangedEvent = new CustomEvent('variant:changed', {
+        detail: { variant: variant },
+        bubbles: true
+      });
+      this.dispatchEvent(variantChangedEvent);
+    }
   }
   updateOptions() {
     this.options = Array.from(

@@ -1,0 +1,148 @@
+[1mdiff --git a/layout/theme.liquid b/layout/theme.liquid[m
+[1mindex 536cc83..4f3f555 100644[m
+[1m--- a/layout/theme.liquid[m
+[1m+++ b/layout/theme.liquid[m
+[36m@@ -359,6 +359,7 @@[m
+           }[m
+ [m
+           function handleVariantChange(event) {[m
+[32m+[m[32m            console.log(event);[m
+             console.log('New variant:', event.detail.newVariant);[m
+             // Add any additional logic you want to perform when the variant changes[m
+           }[m
+[1mdiff --git a/sections/main-product-meta-information.liquid b/sections/main-product-meta-information.liquid[m
+[1mindex 142ffa6..4380b4f 100644[m
+[1m--- a/sections/main-product-meta-information.liquid[m
+[1m+++ b/sections/main-product-meta-information.liquid[m
+[36m@@ -235,10 +235,10 @@[m
+                       {% render 'icon-caret' %}[m
+                     </summary>[m
+                     <div class="accordion__content rte" id="ProductAccordion-{{ block.id }}-{{ section.id }}">[m
+[31m-                  [m
+[32m+[m
+ [m
+                     <table id='meta-information-table' data-initialvariantoption='{{product.selected_or_first_available_variant.option1}}' style="margin:1px">[m
+[31m-                     [m
+[32m+[m
+                       <tbody>[m
+                         <tr>[m
+                           <td>Weight</td>[m
+[36m@@ -260,7 +260,7 @@[m
+                           <td>Braking System</td>[m
+                           <td id='meta-information-breaks'></td>[m
+                         </tr>[m
+[31m-                       [m
+[32m+[m
+                       </tbody>[m
+                     </table>[m
+ [m
+[36m@@ -290,7 +290,7 @@[m
+ [m
+                 <script>[m
+                   const variantMetaData = JSON.parse(document.querySelector('#variant_meta_information').innerHTML);[m
+[31m-                  console.log("parsed variantMetaData", variantMetaData)[m
+[32m+[m[32m                  console.log("parsed variantMetaData", variantMetaData);[m
+ [m
+                   const weightTxt = document.querySelector('#meta-information-weight');[m
+                   const rangeTxt = document.querySelector('#meta-information-range');[m
+[36m@@ -299,16 +299,97 @@[m
+                   const breaksTxt = document.querySelector('#meta-information-breaks');[m
+ [m
+                   function updateUI(variantOption) {[m
+[32m+[m[32m                    console.log("Updating UI for variant:", variantOption);[m
+[32m+[m[32m                    // Check if the variant option exactly matches a key in variantMetaData[m
+[32m+[m[32m                    let data = variantMetaData[variantOption];[m
+[32m+[m
+[32m+[m[32m                    // If not found, try to match partially[m
+[32m+[m[32m                    if (!data) {[m
+[32m+[m[32m                      const keys = Object.keys(variantMetaData);[m
+[32m+[m[32m                      for (let key of keys) {[m
+[32m+[m[32m                        if (variantOption.toLowerCase().includes(key.toLowerCase())) {[m
+[32m+[m[32m                          data = variantMetaData[key];[m
+[32m+[m[32m                          break;[m
+[32m+[m[32m                        }[m
+[32m+[m[32m                      }[m
+[32m+[m[32m                    }[m
+[32m+[m[32m                    if (data) {[m
+[32m+[m[32m                      weightTxt.textContent = data.weight;[m
+[32m+[m[32m                      rangeTxt.textContent = data.range;[m
+[32m+[m[32m                      speedTxt.textContent = data.speed;[m
+[32m+[m[32m                      batteryTxt.textContent = data.battery;[m
+[32m+[m[32m                      breaksTxt.textContent = data.breaks;[m
+[32m+[m[32m                    } else {[m
+[32m+[m[32m                      console.error("No data found for variant:", variantOption);[m
+[32m+[m[32m                    }[m
+[32m+[m[32m                  }[m
+[32m+[m
+[32m+[m[32m                  function getSelectedVariantOption() {[m
+[32m+[m[32m                    // Try to get the selected option from radio buttons[m
+[32m+[m[32m                    const variantRadios = document.querySelectorAll('input[type="radio"][name^="Color"]');[m
+[32m+[m[32m                    for (const radio of variantRadios) {[m
+[32m+[m[32m                      if (radio.checked) {[m
+[32m+[m[32m                        return radio.value;[m
+[32m+[m[32m                      }[m
+[32m+[m[32m                    }[m
+ [m
+[32m+[m[32m                    // If radio buttons are not found, try to get from select dropdown[m
+[32m+[m[32m                    const variantSelect = document.querySelector('select[data-index="option1"]');[m
+[32m+[m[32m                    if (variantSelect) {[m
+[32m+[m[32m                      return variantSelect.value;[m
+[32m+[m[32m                    }[m
+[32m+[m
+[32m+[m[32m                    // If neither is found, return null[m
+[32m+[m[32m                    return null;[m
+[32m+[m[32m                  }[m
+[32m+[m
+[32m+[m[32m                  function handleVariantChange() {[m
+[32m+[m[32m                    const selectedVariant = getSelectedVariantOption();[m
+[32m+[m[32m                    if (selectedVariant) {[m
+[32m+[m[32m                      updateUI(selectedVariant);[m
+[32m+[m[32m                    }[m
+                   }[m
+[31m-                  //subscribe to variant changes and update UI based on new selection[m
+[31m-                  //...[m
+ [m
+[32m+[m[32m                  // Listen for changes on radio buttons[m
+[32m+[m[32m                  document.addEventListener('change', function(event) {[m
+[32m+[m[32m                    if (event.target.matches('input[type="radio"][name^="Color"]')) {[m
+[32m+[m[32m                      handleVariantChange();[m
+[32m+[m[32m                    }[m
+[32m+[m[32m                  });[m
+ [m
+[32m+[m[32m                  // Listen for changes on select dropdown[m
+[32m+[m[32m                  const variantSelect = document.querySelector('select[data-index="option1"]');[m
+[32m+[m[32m                  if (variantSelect) {[m
+[32m+[m[32m                    variantSelect.addEventListener('change', handleVariantChange);[m
+[32m+[m[32m                  }[m
+ [m
+[31m-                  //initialize on pageload[m
+[32m+[m[32m                  // Listen for custom variant change events[m
+[32m+[m[32m                  document.addEventListener('variant:change', function(event) {[m
+[32m+[m[32m                    const variant = event.detail.variant;[m
+[32m+[m[32m                    if (variant && variant.option1) {[m
+[32m+[m[32m                      updateUI(variant.option1);[m
+[32m+[m[32m                    }[m
+[32m+[m[32m                  });[m
+[32m+[m[32m                  // Initialize on page load[m
+                   const initialVariantOption = document.querySelector('#meta-information-table').dataset.initialvariantoption;[m
+                   updateUI(initialVariantOption);[m
+[32m+[m
+[32m+[m[32m                  // Observe DOM changes for dynamically added elements[m
+[32m+[m[32m                  const observer = new MutationObserver(function(mutations) {[m
+[32m+[m[32m                    mutations.forEach(function(mutation) {[m
+[32m+[m[32m                      if (mutation.type === 'childList') {[m
+[32m+[m[32m                        const addedNodes = mutation.addedNodes;[m
+[32m+[m[32m                        for (let i = 0; i < addedNodes.length; i++) {[m
+[32m+[m[32m                          if (addedNodes[i].nodeType === 1 && addedNodes[i].matches('input[type="radio"][name^="Color"]')) {[m
+[32m+[m[32m                            handleVariantChange();[m
+[32m+[m[32m                            break;[m
+[32m+[m[32m                          }[m
+[32m+[m[32m                        }[m
+[32m+[m[32m                      }[m
+[32m+[m[32m                    });[m
+[32m+[m[32m                  });[m
+[32m+[m
+[32m+[m[32m                  observer.observe(document.body, { childList: true, subtree: true });[m
+                 </script>[m
+ [m
+               {%- when 'quantity_selector' -%}[m

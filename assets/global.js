@@ -1112,6 +1112,12 @@ class VariantSelects extends HTMLElement {
     super();
     this.addEventListener("change", this.onVariantChange);
   }
+
+  connectedCallback() {
+    this.updateOptions();
+    this.updateMasterId();
+    this.renderProductInfo();
+  }
   onVariantChange(event) {
     this.updateOptions();
     this.updateMasterId();
@@ -1135,8 +1141,8 @@ class VariantSelects extends HTMLElement {
     // Add this new code to dispatch a custom event
     this.dispatchVariantChangeEvent();
   }
-//+
-  // Add this new method to the VariantSelects class//+
+
+  // Add this new method to the VariantSelects class
   dispatchVariantChangeEvent() {
     const variant = this.currentVariant;
     if (variant) {

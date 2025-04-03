@@ -67,7 +67,7 @@ class AvailabilityStatus extends HTMLElement {
 
   }
 
-
+  
   updateUI() { 
     if (!this.selectedVariantStockData) return;
     

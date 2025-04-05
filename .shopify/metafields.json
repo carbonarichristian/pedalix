@@ -8,7 +8,58 @@
   "market": [],
   "order": [],
   "page": [],
-  "product": [],
+  "product": [
+    {
+      "key": "rating",
+      "namespace": "bike",
+      "name": "Rating",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "frame",
+      "namespace": "bike",
+      "name": "Frame",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "gear",
+      "namespace": "bike",
+      "name": "Gear",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "brake",
+      "namespace": "bike",
+      "name": "Brake",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "suspension",
+      "namespace": "bike",
+      "name": "Suspension",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    }
+  ],
   "variant": [],
   "shop": []
 }

@@ -3,9 +3,10 @@ class AvailabilityStatus extends HTMLElement {
     super();
 
     //Initial values
-    this.selectedLocation = "New York";
-    this.selectedVariantColor =  "Navy Blue"
+    this.availabilityStatus = document.querySelector(".availability-status");
     this.selectedVariantStockData = null;
+    this.selectedLocation = "New York";
+    this.selectedVariantColor =  this.availabilityStatus.dataset.initialVariant;
 
     //UI Elements
     this.activeLocationTexts = this.querySelectorAll(".active-location-text");
@@ -22,17 +23,19 @@ class AvailabilityStatus extends HTMLElement {
       this.handleChangeLocation.bind(this)
     );
 
-    document.addEventListener("afterVariantChange", 
+    document.addEventListener("variant:changed",
       this.handleVariantChange.bind(this)
     );
 
-    //initialize! 
-    
+    //initialize!
+    this.handleChangeLocation();
+
   }
 
-  handleVariantChange(event) {
+  async handleVariantChange(event) {
     /* update  this.selectedVariantColor based on the Shopify variant change-event */
-   
+    this.selectedVariantColor = event.detail.variant.option1;
+    console.log(this.selectedVariantColor);
     this.updateAvailability();
   }
 
@@ -44,18 +47,18 @@ class AvailabilityStatus extends HTMLElement {
 
   async updateAvailability() {
     console.log("Attempt to Update Availability", {variant: this.selectedVariantColor , location: this.selectedLocation});
-    
+
     if(!this.selectedVariantStockData || this.selectedVariantStockData.color != this.selectedVariantColor)
     {
        await this.getStockDataForVariant();
     }
-   
+
     this.updateUI();
   }
 
   async getStockDataForVariant() {
    const apiUrl = `https://gist.githubusercontent.com/CodingwithJan/7961f327bc68d2502835199fc92b86a1/raw/3f3b7f6ac133bcb55a931eae3b3a5c7e7a8cf249/bike_water_bottle-${this.selectedVariantColor}.json`;
-    
+
     try {
         const response = await fetch(apiUrl);
         const jsonResponse = await response.json();
@@ -67,33 +70,37 @@ class AvailabilityStatus extends HTMLElement {
 
   }
 
-  
-  updateUI() { 
+
+  updateUI() {
     if (!this.selectedVariantStockData) return;
-    
+
     this.activeLocationTexts.forEach((textElement) => {
       textElement.innerText = this.selectedLocation;
     });
-    
+
     const storeStock = this.selectedVariantStockData.locations[this.selectedLocation];
     const totalStock =
       this.selectedVariantStockData.locations["New York"] + this.selectedVariantStockData.locations["Los Angeles"];
 
     if (storeStock > 0) {
+      console.log(storeStock);
       this.storeStatus.classList.remove("unavailable");
       this.storeStatus.classList.add("available");
       this.storeText.innerText = "Available";
     } else {
+      console.log(storeStock);
       this.storeStatus.classList.add("unavailable");
       this.storeStatus.classList.remove("available");
       this.storeText.innerText = "Unvailable";
     }
 
     if (totalStock > 0) {
+      console.log(storeStock);
       this.deliveryStatus.classList.remove("unavailable");
       this.deliveryStatus.classList.add("available");
       this.deliveryText.innerText = "Available";
     } else {
+      console.log(storeStock);
       this.deliveryStatus.classList.add("unavailable");
       this.deliveryStatus.classList.remove("available");
       this.deliveryText.innerText = "Unavailable";

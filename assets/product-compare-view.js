@@ -8,6 +8,8 @@ class ProductCompareView extends HTMLElement {
     this.productSelect = this.querySelector("#product-select");
     this.comparisonContainer = this.querySelector("#compare-product-container");
     this.addProductBtn = this.querySelector("#add-product-button");
+    this.loadingSpinner = this.querySelector(".loading__spinner");
+    console.log(this.loadingSpinner);
     // Bind event listeners
     this.addProductBtn.addEventListener(
       "click",
@@ -22,7 +24,6 @@ class ProductCompareView extends HTMLElement {
 
   async handleAddProduct() {
     /* 1) get the selected product handle from the dropdown */
-    console.log(this.productSelect.value);
     const productHandle = this.productSelect.value;
     console.log(`attempting to add product ${productHandle}`);
     if (!productHandle) return;
@@ -31,9 +32,11 @@ class ProductCompareView extends HTMLElement {
     //add check here
 
     /* 2) fetch the product card for the selected product */
+    this.loadingSpinner.classList.remove("hidden");
     const productCard = await this.fetchProductCardSection(productHandle);
 
     if (!productCard || !(productCard instanceof Node)) {
+      this.loadingSpinner.classList.add("hidden");
       console.error(
         "Something went wrong while fetching the product card.",
         productCard
@@ -47,6 +50,7 @@ class ProductCompareView extends HTMLElement {
 
     /* 3) disable the added product in our dropdown */
     this.toggleSelectOption(productHandle);
+    this.loadingSpinner.classList.add("hidden");
   }
 
   // Fetch product details and add to comparison container

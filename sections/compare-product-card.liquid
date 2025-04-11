@@ -16,13 +16,13 @@ Replace all hardcoded values with dynamic values from the product object
 
   </div>
   <img src="{{ product.featured_image | image_url: width: 200 }}" alt="{{ product.title }}">
-  <p>Price: {{product.price | money }}</p>
-  <p>Rating: {{ product.metafields.bike.rating }}⭐</p>
-  <p>Frame: {{ product.metafields.bike.frame }}</p>
-  <p>Suspension: {{ product.metafields.bike.suspension }}</p>
-  <p>Brake: {{ product.metafields.bike.brake }}</p>
-  <p>Gears: {{ product.metafields.bike.gear }}</p>
-  <p><a class="link--text" href="/products/{{ product.handle }}">More Details</a></p>
+  <p><strong>Price:</strong> {{product.price | money }}</p>
+  <p><strong>Rating:</strong> {{ product.metafields.bike.rating }}⭐</p>
+  <p><strong>Frame:</strong> {{ product.metafields.bike.frame }}</p>
+  <p><strong>Suspension:</strong> {{ product.metafields.bike.suspension }}</p>
+  <p><strong>Brake:</strong> {{ product.metafields.bike.brake }}</p>
+  <p><strong>Gears:</strong> {{ product.metafields.bike.gear }}</p>
+  <p><strong><a class="link--text" href="/products/{{ product.handle }}">More Details</a></strong></p>
 </div>
 
 {% schema %}

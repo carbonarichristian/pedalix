@@ -85,6 +85,9 @@ product-compare-view .select__select {
 }
 
 product-compare-view .heading-wrap {
+  position: relative;
+  right: 0;
+  top: 50%;
   display: flex;
   align-items: center;
   gap: 20px;
@@ -120,11 +123,16 @@ product-compare-view .title-wrap {
 }
 
 product-compare-view .compare-product-card {
-  border: 1px solid rgba(var(--color-foreground), 0.1);
+  border: 4px solid rgba(var(--color-foreground), 0.3);
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   min-width: 18%;
+}
+
+product-compare-view .compare-product-card strong {
+  color: rgba(var(--color-foreground),0.9);
 }
 
 product-compare-view .remove-product-button {

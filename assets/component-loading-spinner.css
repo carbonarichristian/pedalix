@@ -60,10 +60,8 @@
   cursor: default;
 }
 
-product-compare-view .loading__spinner:not(.hidden) {
-  position: absolute;
-  right: 7%;
-  top: 25%;
+.loading-spinner-wrap .loading__spinner:not(.hidden) {
+  position: relative;
   z-index: 1;
-  width: 1.8rem;
+  width: 2.5rem;
 }

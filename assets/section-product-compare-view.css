@@ -92,7 +92,15 @@ product-compare-view .heading-wrap {
   align-items: center;
   gap: 20px;
   justify-content: center;
+  margin-bottom: 10px;
+}
+
+product-compare-view .loading-spinner-wrap {
+  min-height: 34px;
   margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 product-compare-view p {

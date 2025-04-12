@@ -51,6 +51,11 @@ class ProductCompareView extends HTMLElement {
     /* 3) disable the added product in our dropdown */
     this.toggleSelectOption(productHandle);
     this.loadingSpinner.classList.add("hidden");
+    console.log(productCard);
+    productCard.classList.add("zoom-in");
+    setTimeout(() => {
+      productCard.classList.remove("zoom-in");
+    }, 500);
   }
 
   // Fetch product details and add to comparison container
@@ -93,7 +98,12 @@ class ProductCompareView extends HTMLElement {
     /* 5) remove product from our container and toggle the select option */
 
     //add code here
-    this.comparisonContainer.removeChild(this.comparisonContainer.querySelector(`#${removehandle}`));
+    const productCard = this.comparisonContainer.querySelector(`#${removehandle}`)
+    console.log(productCard);
+    productCard.classList.add("zoom-out");
+    setTimeout(() => {
+      this.comparisonContainer.removeChild(this.comparisonContainer.querySelector(`#${removehandle}`));
+    }, 400);
 
 
     this.toggleSelectOption(removehandle);

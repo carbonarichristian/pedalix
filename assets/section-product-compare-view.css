@@ -170,7 +170,6 @@ product-compare-view .link-wrapper {
 product-compare-view .compare-product-card:hover {
   transform: scale(1.02);
   box-shadow: 10px 0 20px rgba(0,0,0,0.8);
-
 }
 
 product-compare-view .compare-product-card {
@@ -184,7 +183,7 @@ product-compare-view .compare-product-card {
   align-items: center;
   min-width: fit-content;
   cursor: pointer;
-  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  transition: transform 0.2s ease, box-shadow 0.1s ease;
 }
 
 product-compare-view .compare-product-card .image-wrap {
@@ -209,4 +208,34 @@ product-compare-view .remove-product-button {
   height: 16px;
   position: relative;
   cursor: pointer;
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes zoomOut {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+}
+
+.zoom-in {
+  animation: zoomIn 0.2s ease-out;
+}
+
+.zoom-out {
+  animation: zoomOut 0.2s ease-out forwards;
 }

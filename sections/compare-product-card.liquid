@@ -14,8 +14,8 @@ Replace all hardcoded values with dynamic values from the product object
     <div class="image-wrap">
       <img src="{{ product.featured_image | image_url: width: 200 }}" alt="{{ product.title }}">
     </div>
-    <h4>{{ product.title }}</h4>
     <div class="product-infos">
+      <h4>{{ product.title }}</h4>
       <p><strong>Rating:</strong> {{ product.metafields.bike.rating }}⭐</p>
       <p><strong>Frame:</strong> {{ product.metafields.bike.frame }}</p>
       <p><strong>Suspension:</strong> {{ product.metafields.bike.suspension }}</p>

@@ -5,26 +5,24 @@ Replace all hardcoded values with dynamic values from the product object
   - Thumbnail image 200x width filter
 {% endcomment %}
 
-
 <div class="compare-product-card" id="{{ product.handle }}">
-  <div class="title-wrap">
-    <h4>{{ product.title }}</h4>
-
+  <div class="remove-wrap">
     <button class="remove-product-button" data-removeproducthandle="{{ product.handle }}" aria-label="Remove product">
-
     </button>
-
   </div>
-  <img src="{{ product.featured_image | image_url: width: 200 }}" alt="{{ product.title }}">
-  <p><strong>Price:</strong> {{product.price | money }}</p>
-  <p><strong>Rating:</strong> {{ product.metafields.bike.rating }}⭐</p>
-  <p><strong>Frame:</strong> {{ product.metafields.bike.frame }}</p>
-  <p><strong>Suspension:</strong> {{ product.metafields.bike.suspension }}</p>
-  <p><strong>Brake:</strong> {{ product.metafields.bike.brake }}</p>
-  <p><strong>Gears:</strong> {{ product.metafields.bike.gear }}</p>
-  <p><strong><a class="link--text" href="/products/{{ product.handle }}">More Details</a></strong></p>
-</div>
-
+  <a class="link-wrapper" href="/products/{{ product.handle }}">
+    <img src="{{ product.featured_image | image_url: width: 200 }}" alt="{{ product.title }}">
+    <h4>{{ product.title }}</h4>
+    <div class="product-infos">
+      <p><strong>Price:</strong> {{product.price | money }}</p>
+      <p><strong>Rating:</strong> {{ product.metafields.bike.rating }}⭐</p>
+      <p><strong>Frame:</strong> {{ product.metafields.bike.frame }}</p>
+      <p><strong>Suspension:</strong> {{ product.metafields.bike.suspension }}</p>
+      <p><strong>Brake:</strong> {{ product.metafields.bike.brake }}</p>
+      <p><strong>Gears:</strong> {{ product.metafields.bike.gear }}</p>
+    </div>
+  </a>
+  </div>
 {% schema %}
 {
   "name": "compare product card",

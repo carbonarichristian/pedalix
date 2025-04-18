@@ -19,6 +19,15 @@
   color: rgb(var(--color-foreground));
 }
 
+@media screen and (max-width: 768px) {
+  .countdown-text {
+    font-size: 1.2em;
+  }
+  .countdown-timer {
+    font-size: 1.3em;
+  }
+}
+
 .countdown-timer {
   font-size: 1.5em;
   display: flex;

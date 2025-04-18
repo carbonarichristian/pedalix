@@ -9,7 +9,7 @@ class ProductCompareView extends HTMLElement {
     this.comparisonContainer = this.querySelector("#compare-product-container");
     this.addProductBtn = this.querySelector("#add-product-button");
     this.loadingSpinner = this.querySelector(".loading__spinner");
-    this.addToCartButton = "";
+    this.addToCartButtons = {};
     // Bind event listeners
     this.addProductBtn.addEventListener(
       "click",
@@ -59,7 +59,41 @@ class ProductCompareView extends HTMLElement {
       productCard.classList.remove("zoom-in");
     }, 500);
 
-    console.log(productCard.querySelector("button"));
+    /* Adds event listener to current product card's button */
+    const addToCartButton = productCard.querySelector(`#${productHandle}`);
+    addToCartButton && addToCartButton.addEventListener('click', () => this.addToCart(addToCartButton));
+  }
+   addToCart(addToCartButton) {
+    addToCartButton.querySelector("svg").classList.add("hidden");
+    addToCartButton.querySelector("span").classList.add("hidden");
+    addToCartButton.querySelector(".loading__spinner").classList.remove("hidden");
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({
+        id: addToCartButton.dataset.variantId,
+        quantity: 1
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log('Added to cart:', data);
+      // You can show a popup, update cart count, etc.
+      addToCartButton.querySelector(".loading__spinner").classList.add("hidden");
+      addToCartButton.querySelector("svg").classList.remove("hidden");
+      addToCartButton.querySelector("span").classList.remove("hidden");
+      document.querySelector("cart-drawer").classList.add("active");
+      publish(PUB_SUB_EVENTS.cartUpdate);
+    })
+    .catch(err => {
+      console.error('Error adding to cart:', err);
+      addToCartButton.querySelector(".loading__spinner").classList.add("hidden");
+      addToCartButton.querySelector("svg").classList.remove("hidden");
+      addToCartButton.querySelector("span").classList.remove("hidden");
+    });
   }
 
   // Fetch product details and add to comparison container

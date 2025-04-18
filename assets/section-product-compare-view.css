@@ -30,6 +30,12 @@ product-compare-view #compare-product-container {
   }
 }
 
+
+@media screen and (min-width: 768px) {
+  product-compare-view .compare-product-card {
+    min-width: 338px;
+  }
+}
 product-compare-view a {
   display: flex;
   flex-direction: column;
@@ -182,7 +188,7 @@ product-compare-view .compare-product-card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 250px;
+  min-width: 300px;
   max-width: 345px;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.1s ease;
@@ -208,28 +214,39 @@ product-compare-view .compare-product-card #price {
   padding-bottom: 5px;
 }
 
-product-compare-view .compare-product-card button#add-to-cart {
+product-compare-view .compare-product-card button.add-to-cart {
   border-radius: 50px;
   transition: transform 0.1s ease;
   padding-left: 10px;
 }
 
-product-compare-view .compare-product-card button#add-to-cart svg {
+@media screen and (max-width: 768px) {
+  product-compare-view .compare-product-card button.add-to-cart {
+    scale: (0.5);
+  }
+}
+
+product-compare-view .compare-product-card button.add-to-cart svg {
   width: 25px;
   opacity: 0;
   transition: opacity 0.1s ease;
 }
 
-product-compare-view .compare-product-card button#add-to-cart:hover {
+product-compare-view .compare-product-card button.add-to-cart:hover {
   transform: scale(1.05);
 }
 
-product-compare-view .compare-product-card button#add-to-cart:hover svg {
+product-compare-view .compare-product-card button.add-to-cart:hover svg {
   opacity: 1;
 }
 
-product-compare-view .compare-product-card button#add-to-cart::after {
+product-compare-view .compare-product-card button.add-to-cart::after {
   display: none;
+}
+
+product-compare-view .compare-product-card button.add-to-cart .loading__spinner {
+  margin-left: 10px;
+  margin-top: 5px;
 }
 
 product-compare-view .remove-product-button {

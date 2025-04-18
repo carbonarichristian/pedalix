@@ -59,3 +59,9 @@
   pointer-events: none;
   cursor: default;
 }
+
+.loading-spinner-wrap .loading__spinner:not(.hidden) {
+  position: relative;
+  z-index: 1;
+  width: 2.5rem;
+}

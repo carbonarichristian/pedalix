@@ -349,15 +349,20 @@
     {%- if settings.predictive_search_enabled -%}
       <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
-    
+
     {% if template == 'product' %}
       <script>
-          document.addEventListener('afterVariantChange', handleVariantChange)
-
-          function handleVariantChange(event){
-            console.log('New variant:', event.detail.newVariant)
+        document.addEventListener('DOMContentLoaded', function() {
+          const variantSelects = document.querySelector('variant-selects');
+          if (variantSelects) {
+            variantSelects.addEventListener('afterVariantChange', handleVariantChange);
           }
-          
+
+          function handleVariantChange(event) {
+            console.log('New variant:', event.detail.newVariant);
+            // Add any additional logic you want to perform when the variant changes
+          }
+        });
       </script>
     {% endif %}
 

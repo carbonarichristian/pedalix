@@ -1113,6 +1113,11 @@ class VariantSelects extends HTMLElement {
     this.addEventListener("change", this.onVariantChange);
   }
 
+  connectedCallback() {
+    this.updateOptions();
+    this.updateMasterId();
+    this.renderProductInfo();
+  }
   onVariantChange(event) {
     this.updateOptions();
     this.updateMasterId();
@@ -1132,9 +1137,22 @@ class VariantSelects extends HTMLElement {
       this.renderProductInfo();
       this.updateShareUrl();
     }
-  
+
+    // Add this new code to dispatch a custom event
+    this.dispatchVariantChangeEvent();
   }
 
+  // Add this new method to the VariantSelects class
+  dispatchVariantChangeEvent() {
+    const variant = this.currentVariant;
+    if (variant) {
+      const variantChangedEvent = new CustomEvent('variant:changed', {
+        detail: { variant: variant },
+        bubbles: true
+      });
+      this.dispatchEvent(variantChangedEvent);
+    }
+  }
   updateOptions() {
     this.options = Array.from(
       this.querySelectorAll("select, fieldset"),

@@ -9,7 +9,7 @@ class ProductCompareView extends HTMLElement {
     this.comparisonContainer = this.querySelector("#compare-product-container");
     this.addProductBtn = this.querySelector("#add-product-button");
     this.loadingSpinner = this.querySelector(".loading__spinner");
-    console.log(this.loadingSpinner);
+    this.addToCartButton = "";
     // Bind event listeners
     this.addProductBtn.addEventListener(
       "click",
@@ -21,6 +21,8 @@ class ProductCompareView extends HTMLElement {
       this.handleRemoveProduct.bind(this)
     );
   }
+
+
 
   async handleAddProduct() {
     /* 1) get the selected product handle from the dropdown */
@@ -56,6 +58,8 @@ class ProductCompareView extends HTMLElement {
     setTimeout(() => {
       productCard.classList.remove("zoom-in");
     }, 500);
+
+    console.log(productCard.querySelector("button"));
   }
 
   // Fetch product details and add to comparison container

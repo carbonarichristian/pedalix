@@ -10,20 +10,27 @@ Replace all hardcoded values with dynamic values from the product object
     <button class="remove-product-button" data-removeproducthandle="{{ product.handle }}" aria-label="Remove product">
     </button>
   </div>
+  <div class="image-wrap">
+    <img src="{{ product.featured_image | image_url: width: 200 }}" alt="{{ product.title }}">
+  </div>
+  <div class="product-infos">
   <a class="link-wrapper" href="/products/{{ product.handle }}">
-    <div class="image-wrap">
-      <img src="{{ product.featured_image | image_url: width: 200 }}" alt="{{ product.title }}">
-    </div>
-    <div class="product-infos">
       <h4>{{ product.title }}</h4>
       <p><strong>Rating:</strong> {{ product.metafields.bike.rating }}⭐</p>
       <p><strong>Frame:</strong> {{ product.metafields.bike.frame }}</p>
       <p><strong>Suspension:</strong> {{ product.metafields.bike.suspension }}</p>
       <p><strong>Brake:</strong> {{ product.metafields.bike.brake }}</p>
       <p><strong>Gears:</strong> {{ product.metafields.bike.gear }}</p>
-      <p id="price"><strong>Price: {{product.price | money }}</strong></p>
-    </div>
   </a>
+      <div id="price">
+        <p><strong>Price: {{product.price | money }}</strong></p>
+        <button class="button button--secondary" id="add-to-cart">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="yellow" viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z"/></svg>
+          Add to cart
+          {% render 'loading-spinner' %}
+        </button>
+      </div>
+    </div>
   </div>
 {% schema %}
 {

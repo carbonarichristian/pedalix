@@ -75,18 +75,25 @@ class ProductCompareView extends HTMLElement {
       },
       body: JSON.stringify({
         id: addToCartButton.dataset.variantId,
-        quantity: 1
+        quantity: 1,
+        sections: "cart-drawer,cart-icon-bubble"
       })
     })
     .then(res => res.json())
     .then(data => {
       console.log('Added to cart:', data);
       // You can show a popup, update cart count, etc.
+      const cartDrawer = document.querySelector("cart-drawer");
       addToCartButton.querySelector(".loading__spinner").classList.add("hidden");
       addToCartButton.querySelector("svg").classList.remove("hidden");
       addToCartButton.querySelector("span").classList.remove("hidden");
-      document.querySelector("cart-drawer").classList.add("active");
-      publish(PUB_SUB_EVENTS.cartUpdate);
+      if (cartDrawer) {
+        cartDrawer.renderContents(data, false);
+        cartDrawer.classList.remove('is-empty');
+      } else {
+        const newContent = getSectionInnerHTML(html, '#shopify-section-cart-icon-bubble');
+        document.querySelector('#cart-icon-bubble').innerHTML = newContent;
+      }
     })
     .catch(err => {
       console.error('Error adding to cart:', err);

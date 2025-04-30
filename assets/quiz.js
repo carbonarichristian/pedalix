@@ -5,22 +5,32 @@ const next_btn = document.getElementById("next-button");
 const quiz_form = document.querySelector("#quizForm");
 const answers = {};
 
-let current_question_index = 0;
+let current_question_id = 0;
 
 quiz_form.addEventListener("change", updateAnswers);
 function updateAnswers(event) {
+  console.log(event.target);
   const { name, value } = event.target;
   answers[name] = value;
+  if (value == "bike") {
+    current_question_id = 1;
+  } else if (value == "equipment") {
+    current_question_id = 2;
+  } else {
+    current_question_id += 2;
+  }
   console.log(answers);
 }
 
-function updateButtonStates(index) {
-  console.log(index);
+function updateButtonStates(id) {
+  console.log(id);
 
-  if(index == 0) {
+  if(id == 0) {
     prev_btn.disabled = true;
+    next_btn.style.display = "inline-block";
     finish_btn.style.display = "none";
-  } else if(index == 2) {
+  } else if(id == 3 || id == 2) {
+    prev_btn.disabled = false;
     next_btn.style.display = "none";
     finish_btn.style.display = "inline-block";
 
@@ -35,23 +45,22 @@ function updateButtonStates(index) {
 }
 
 next_btn.addEventListener("click", function () {
-  current_question_index++;
-  displayQuestion(current_question_index);
-  updateButtonStates(current_question_index);
+  displayQuestion(current_question_id);
+  updateButtonStates(current_question_id);
 });
 
 prev_btn.addEventListener("click", function () {
-  current_question_index--;
-  displayQuestion(current_question_index);
-  updateButtonStates(current_question_index);
+  current_question_id = 0;
+  displayQuestion(current_question_id);
+  updateButtonStates(current_question_id);
 });
 
-function displayQuestion(index) {
-  const current_question = questions[index];
+function displayQuestion(id) {
+  const current_question = questions[id];
   const question_container = document.querySelector(`.container`);
   console.log(question_container);
   let questionHTML = `
-    <h2>${index + 1}) ${current_question.text}</h2>
+    <h2>${id + 1}) ${current_question.text}</h2>
     <div class="label-container">
       ${current_question.options.map(option => `
         <input type="radio" id="${option.value}" name="${current_question.name}" value="${option.value}">
@@ -77,10 +86,40 @@ function displayQuestion(index) {
   }
 }
 
-updateButtonStates(current_question_index);
-displayQuestion(current_question_index);
+function showResult(answers) {
+  const productUrls = {
+    "trail-bike": "/products/hybrid-bike",
+    "mountain-bike-red": "/products/red-mountain-bike",
+    "mountain-bike-black": "/products/black-mountain-bike",
+    "mountain-bike-blue": "/products/blue-mountain-bike",
+    "mountain-bike-yellow": "/products/yellow-mountain-bike",
+    "bike-water-bottle": "/products/bike-water-bottle",
+    "red-helmet": "/products/copy-of-gold-helmet"
+  };
 
-finish_btn.addEventListener("click", function () {
-  // Handle form submission or perform any necessary actions
-  console.log("Form submitted with answers:", answers);
-});
+  console.log(answers);
+  let redirectUrl = "";
+
+  if (answers.product_type == "equipment") {
+    console.log("Redirecting to equipment");
+    console.log(answers.equipment_type);
+    redirectUrl = productUrls[answers.equipment_type];
+  } else if (answers.product_type == "bike") {
+    console.log("Redirecting to bikes");
+    if (answers.bike_type == "hybrid") {
+      console.log("Redirecting to hybrid bike");
+      redirectUrl = productUrls["trail-bike"];
+    } else if (answers.bike_type == "mountain") {
+      console.log("Redirecting to mountain bike");
+      redirectUrl = productUrls[`mountain-bike-${answers.color}`];
+    }
+  }
+  console.log(redirectUrl);
+  window.location.href = redirectUrl; // or use window.location.assign(redirectUrl)
+}
+
+
+updateButtonStates(current_question_id);
+displayQuestion(current_question_id);
+
+finish_btn.addEventListener("click", () => { showResult(answers)});

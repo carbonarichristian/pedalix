@@ -1,7 +1,68 @@
 {
   "article": [],
   "blog": [],
-  "collection": [],
+  "collection": [
+    {
+      "key": "collection_seo_title",
+      "namespace": "custom",
+      "name": "Collection Seo Title",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "collection_seo_text",
+      "namespace": "custom",
+      "name": "Collection Seo Text",
+      "description": "",
+      "type": {
+        "name": "rich_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "collection_main_image",
+      "namespace": "custom",
+      "name": "Collection Main Image",
+      "description": "This is for a section on the collection page",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "collection_left_image",
+      "namespace": "custom",
+      "name": "Collection Left Image",
+      "description": "This is for a section on the collection page",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "collection_right_image",
+      "namespace": "custom",
+      "name": "Collection Right Image",
+      "description": "This is for a section on the collection page",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "collection_description",
+      "namespace": "custom",
+      "name": "Collection Description",
+      "description": "This has been provided to gain access to the collection description for seperate sections",
+      "type": {
+        "name": "multi_line_text_field",
+        "category": "TEXT"
+      }
+    }
+  ],
   "company": [],
   "company_location": [],
   "location": [],
@@ -10,53 +71,153 @@
   "page": [],
   "product": [
     {
-      "key": "rating",
-      "namespace": "bike",
-      "name": "Rating",
-      "description": "",
+      "key": "queries",
+      "namespace": "shopify--discovery--product_search_boost",
+      "name": "Search product boosts",
+      "description": "List of search queries for which a product gets higher rank in search results",
+      "type": {
+        "name": "list.single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "related_products",
+      "namespace": "shopify--discovery--product_recommendation",
+      "name": "Related products",
+      "description": "List of related products",
+      "type": {
+        "name": "list.product_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "related_products_display",
+      "namespace": "shopify--discovery--product_recommendation",
+      "name": "Related products settings",
+      "description": "Determines how related products are displayed along with algorithmic product recommendations",
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
       }
     },
     {
-      "key": "frame",
-      "namespace": "bike",
-      "name": "Frame",
-      "description": "",
+      "key": "complementary_products",
+      "namespace": "shopify--discovery--product_recommendation",
+      "name": "Complementary products",
+      "description": "List of complementary products",
+      "type": {
+        "name": "list.product_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "bike_size",
+      "namespace": "custom",
+      "name": "Bike Size",
+      "description": "This will be displayed on the PDP page in the info box under the image",
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
       }
     },
     {
-      "key": "gear",
-      "namespace": "bike",
-      "name": "Gear",
+      "key": "bike_detail_1",
+      "namespace": "custom",
+      "name": "Bike Condition",
       "description": "",
       "type": {
-        "name": "single_line_text_field",
+        "name": "multi_line_text_field",
         "category": "TEXT"
       }
     },
     {
-      "key": "brake",
-      "namespace": "bike",
-      "name": "Brake",
+      "key": "bike_detail_6",
+      "namespace": "custom",
+      "name": "Bike Specifications",
       "description": "",
       "type": {
-        "name": "single_line_text_field",
+        "name": "multi_line_text_field",
         "category": "TEXT"
       }
     },
     {
-      "key": "suspension",
-      "namespace": "bike",
-      "name": "Suspension",
-      "description": "",
+      "key": "gearing-type",
+      "namespace": "shopify",
+      "name": "Gearing type",
+      "description": "Specifies the type of gear system in cycling products, like chain or belt",
       "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "bicycle-features",
+      "namespace": "shopify",
+      "name": "Bicycle features",
+      "description": "Specifies special characteristics of a bike, e.g. puncture resistant tires, luggage rack",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "color-pattern",
+      "namespace": "shopify",
+      "name": "Color",
+      "description": "Defines the primary color or pattern, such as blue or striped",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "material",
+      "namespace": "shopify",
+      "name": "Material",
+      "description": "Defines a product's primary material, such as cotton or wool",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "age-group",
+      "namespace": "shopify",
+      "name": "Age group",
+      "description": "Defines the target age range for a product, such as adults or kids",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "target-gender",
+      "namespace": "shopify",
+      "name": "Target gender",
+      "description": "Identifies the intended gender for a product, such as female, male or unisex",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "compatible-bike-type",
+      "namespace": "shopify",
+      "name": "Compatible bike type",
+      "description": "Specifies the type of bicycle the product is designed for, like electric or road",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "pdp_condition_video",
+      "namespace": "custom",
+      "name": "PDP Condition Video",
+      "description": "Upload condition video of product",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
       }
     }
   ],

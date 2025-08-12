@@ -58,6 +58,16 @@
         "name": "single_line_text_field",
         "category": "TEXT"
       }
+    },
+    {
+      "key": "created_at",
+      "namespace": "custom",
+      "name": "created_at",
+      "description": "When the product has been created",
+      "type": {
+        "name": "date",
+        "category": "DATE_TIME"
+      }
     }
   ],
   "variant": [],

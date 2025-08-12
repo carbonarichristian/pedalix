@@ -79,6 +79,18 @@
           data-url="{{ product.url }}"
           class="product__info-container{% if section.settings.enable_sticky_info %} product__column-sticky{% endif %}"
         >
+          {% if product.metafields.custom.created_at %}
+            {% assign created_timestamp = product.metafields.custom.created_at | date: "%s" | plus: 0 %}
+            {% assign now_timestamp = 'now' | date: "%s" | plus: 0 %}
+
+            {% assign seconds_since_creation = now_timestamp | minus: created_timestamp %}
+            {% assign days_since_creation = seconds_since_creation | divided_by: 86400 %}
+
+            {% if days_since_creation < 20 %}
+              <!-- Product is less than 20 days old -->
+              <p>New Product!</p>
+            {% endif %}
+          {% endif %}
           {%- assign product_form_id = 'product-form-' | append: section.id -%}
 
           {%- for block in section.blocks -%}
@@ -103,6 +115,11 @@
                   </a>
                 </div>
               {%- when 'price' -%}
+                {% if product.compare_at_price %}
+                  {% assign discount = product.compare_at_price_max | minus: product.price %}
+                  {% assign discount_percentage = discount | times: 100 | divided_by: product.compare_at_price_max %}
+                  <p>{{ discount_percentage | round }}% OFF</p>
+                {% endif %}
                 <div class="no-js-hidden" id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
                   {%- render 'price',
                     product: product,

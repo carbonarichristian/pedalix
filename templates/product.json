@@ -60,6 +60,15 @@
             "share_label": "Share"
           }
         },
+        "blog_collapsible_tab_DzrFLP": {
+          "type": "blog_collapsible_tab",
+          "settings": {
+            "heading": "The Benefits of Mountain Biking",
+            "icon": "check_mark",
+            "content": "<p>Lorem Ipsum</p>",
+            "image": "shopify://shop_images/RM_sales_event_2025_1_1.png"
+          }
+        },
         "icon_with_text_VrMPVY": {
           "type": "icon-with-text",
           "settings": {
@@ -83,6 +92,7 @@
         "buy_buttons",
         "description",
         "share",
+        "blog_collapsible_tab_DzrFLP",
         "icon_with_text_VrMPVY"
       ],
       "settings": {

@@ -53,6 +53,10 @@
           "type": "description",
           "settings": {}
         },
+        "size_selection_cc9b7x": {
+          "type": "size-selection",
+          "settings": {}
+        },
         "share": {
           "type": "share",
           "disabled": true,
@@ -82,6 +86,7 @@
         "quantity_selector",
         "buy_buttons",
         "description",
+        "size_selection_cc9b7x",
         "share",
         "icon_with_text_VrMPVY"
       ],

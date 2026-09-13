@@ -449,6 +449,19 @@
         </form>
       </cart-drawer-items>
       <div class="drawer__footer">
+        
+        {%- unless has_care_plan or cart == empty -%}
+          <div class="pedalix-care-upsell" style="margin-top: 12px; padding: 12px 14px; border: 1px solid rgba(var(--color-foreground), 0.15); border-radius: 8px; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;">
+            <div style="font-size: 1.3rem; line-height: 1.4;">
+              <strong>Add Pedalix Care</strong> &mdash; monthly maintenance &amp; tune-ups for {{ 3900 | money_with_currency }}/mo.
+            </div>
+            <button type="button" id="PedalixCareAddButton" class="button button--secondary" style="white-space: nowrap;">
+              {{ 'products.product.add_to_cart' | t }}
+            </button>
+          </div>
+          <p id="PedalixCareAddStatus" class="caption" style="margin: 6px 0 0; display: none;" role="status"></p>
+        {%- endunless -%}
+
         {% assign free_shipping_threshold = 1000000 %}
         {%- comment -%}
         Threshold in cents — $10,000 = 1,000,000 cents
@@ -525,6 +538,16 @@
               {{ 'sections.cart.taxes_and_shipping_at_checkout' | t }}
             {%- endif -%}
           </small>
+
+          {%- liquid
+            assign care_variant_id = 44273951866967
+            assign has_care_plan = false
+            for item in cart.items
+              if item.variant.id == care_variant_id
+                assign has_care_plan = true
+              endif
+            endfor
+          -%}          
         </div>
 
         <!-- CTAs -->
@@ -553,6 +576,46 @@
     </div>
   </div>
 </cart-drawer>
+
+<script>
+  (function () {
+    if (window.__pedalixCareUpsellBound) return;
+    window.__pedalixCareUpsellBound = true;
+
+    document.addEventListener('click', function (event) {
+      var button = event.target.closest('#PedalixCareAddButton');
+      if (!button || button.disabled) return;
+
+      var status = document.getElementById('PedalixCareAddStatus');
+      button.disabled = true;
+      button.textContent = '{{ "accessibility.loading" | t }}';
+
+      fetch('{{ routes.cart_add_url }}.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ items: [{ id: 44273951866967, quantity: 1 }] }),
+      })
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+          if (data.status) {
+            throw new Error(data.description || data.message || 'Could not add Pedalix Care');
+          }
+          if (typeof publish === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
+            publish(PUB_SUB_EVENTS.cartUpdate, { source: 'pedalix-care-upsell', cartData: data });
+          }
+        })
+        .catch(function (error) {
+          console.error('Pedalix Care upsell: failed to add plan', error);
+          button.disabled = false;
+          button.textContent = '{{ "products.product.add_to_cart" | t }}';
+          if (status) {
+            status.style.display = 'block';
+            status.textContent = 'Could not add Pedalix Care — please try again.';
+          }
+        });
+    });
+  })();
+</script>
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {

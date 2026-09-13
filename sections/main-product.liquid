@@ -239,16 +239,6 @@
                     </div>
                   </details>
                 </div>
-              {% when 'size-selection' %}
-                <div class="product__size-selection">
-                  <h3 class="h4">Find Your Size</h3>
-                  <div class="size-selection__input">
-                    <label for="user-height">Your Height (cm):</label>
-                    <input type="number" id="user-height" name="user-height" min="100" max="220" step="1" placeholder="Enter your height">
-                  </div>
-                  <div id="size-recommendation" class="size-recommendation"></div>
-                  <button hidden id="calculate-size" class="button">Calculate Size</button>
-                </div>
               {%- when 'blog_collapsible_tab' -%}
                 <div class="blog product__accordion accordion quick-add-hidden" {{ block.shopify_attributes }}>
                   <details id="Details-{{ block.id }}-{{ section.id }}">
@@ -1061,11 +1051,6 @@
           "info": "t:sections.custom-liquid.settings.custom_liquid.info"
         }
       ]
-    },
-    {
-      "type": "size-selection",
-      "name": "Size Selection"
-
     },
     {
       "type": "blog_collapsible_tab",

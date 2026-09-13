@@ -7,15 +7,12 @@ if (!customElements.get('product-info')) {
         this.input = this.querySelector('.quantity__input');
         this.currentVariant = this.querySelector('.product-variant-id');
         this.submitButton = this.querySelector('[type="submit"]');
-        this.sizeSelection = this.querySelector('.product__size-selection');
       }
 
       cartUpdateUnsubscriber = undefined;
       variantChangeUnsubscriber = undefined;
 
       connectedCallback() {
-        this.sizeSelection = this.querySelector('.product__size-selection');
-        this.sizeSelection.addEventListener('change', this.fetchVariant.bind(this));
         if (!this.input) return;
         this.quantityForm = this.querySelector('.product-form__quantity');
         if (!this.quantityForm) return;
@@ -39,30 +36,6 @@ if (!customElements.get('product-info')) {
           this.variantChangeUnsubscriber();
         }
       }
-
-      fetchVariant() {
-        const recommendationDiv = this.sizeSelection.querySelector('#size-recommendation');
-        const height = this.sizeSelection.querySelector("input").value;
-        console.log(height);
-        console.log(recommendationDiv);
-
-        let recommendedSize;
-        if (height >= 150 && height < 165) {
-          recommendedSize = 'S';
-        } else if (height >= 165 && height < 175) {
-          recommendedSize = 'M';
-        } else if (height >= 175 && height < 185) {
-          recommendedSize = 'L';
-        }
-
-        if (recommendedSize) {
-          recommendationDiv.innerHTML = `<p>Based on your height, we recommend a <strong>${recommendedSize}</strong> size bike.</p>`;
-        } else {
-          recommendationDiv.innerHTML = '<p>Please enter a valid height.</p>';
-        }
-      }
-
-
 
       setQuantityBoundries() {
         const data = {
